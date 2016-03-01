@@ -1,0 +1,136 @@
+/*base*/
+@inner-width:800px;
+html{height: 100%;}
+body{
+	height: 100%;
+	font-family: "微软雅黑",helvetica, sans-serif,"黑体";
+	font-size: 14px;
+	color:#222;
+}
+h1,h2,h3,h4,h5,h6,ul{margin: 0 0;padding: 0 0;}
+a,a:hover{color:black;text-decoration: none;}
+.block{display: block;}
+.fl{float: left;}
+.fr{float: right;}
+.cf{clear:both;}
+.oh{overflow: hidden;}
+.pa{position: absolute;}
+.pr{position: relative;}
+.inner{width: @inner-width;margin: 0 auto;}
+.tc{text-align: center;}
+.tl{text-align: left;}
+.tr{text-align: right;}
+.fp{height: 100%;width: 100%;}
+.w{width: 100%;}
+.h{height: 100%;}
+
+/*height width*/
+.class-generator(h,height,5,10);
+.class-generator(w,width,5,10);
+/*margin*/
+.class-generator(mt,margin-top,5,10);
+.class-generator(ml,margin-left,5,10);
+.class-generator(mr,margin-right,5,10);
+.class-generator(mb,margin-bottom,5,10);
+/*padding*/
+.class-generator(pt,padding-top,5,10);
+.class-generator(pl,padding-left,5,10);
+.class-generator(pr,padding-right,5,10);
+.class-generator(pb,padding-bottom,5,10);
+/*font*/
+.class-generator(f,font-size,1,30,1px,12);
+/*opacity*/
+.class-generator(op,opacity,10,10,0.01);
+.class-generator(@className,@prop,@spacing,@max,@unit:1px,@i:1) when(@i<=@max){
+	@num:@i * @spacing;
+	@val:@num * @unit;
+	.@{className}@{num}{
+		@{prop}: @val;
+	}
+	.class-generator(@className,@prop,@spacing,@max,@unit,@i+1);
+}
+
+/*column*/
+.colunm-generator(@cols:12,@i:1) when(@i<=@cols){
+	.colunm-@{i}{
+		width:@i / @cols * 100%;
+		float:left;
+	}
+	.colunm-generator(@cols,@i + 1);
+}
+.colunm-generator();
+
+/*color*/
+@black:#363636;
+@primary:rgb(4,108,182);
+.black{color:@black;}
+.white{color:white;}
+.primary{color:@primary;}
+
+/*mixin*/
+.bd-radius(@radius:2px){border-radius: @radius;}
+.box-sizing(@style:border-box;){
+	box-sizing:@style;
+	-moz-box-sizing:@style;
+	-webkit-box-sizing:@style;
+}
+.height(@h){line-height: @h;height: @h;}
+.toggleColor(@normal,@hover:lighten(@normal,4%),@active:darken(@normal,4%)){
+	background-color: @normal;
+	&:hover{background-color: @hover;}
+	&:active{background-color: @active;}
+}
+.box-shadow(@rest...){
+	box-shadow: @rest;
+	-webkit-box-shadow:@rest;
+	-moz-box-shadow:@rest;
+}
+.bg-color2(@color1,@color2,@deg){
+	background-color: @color1;
+	background-image: linear-gradient(@deg,@color1,@color1 50%,@color2 50%,@color2 100%);
+	background-image: -webkit-linear-gradient(@deg,@color1,@color1 50%,@color2 50%,@color2 100%);
+}
+.transition(@rest...){
+	transition:@rest;
+	-webkit-transition: @rest;
+	-moz-transition:@rest;
+	-o-transition:@rest;
+}
+.animate(@rest...){
+	-webkit-animation:@rest;
+	-moz-animation:@rest;
+	-ms-animation:@rest;
+	-o-animation:@rest;
+	animation:@rest;
+}
+.keyframes(@name,@frames){
+	@-webkit-keyframes @name { @frames(); }
+    @-moz-keyframes @name { @frames(); }
+    @-ms-keyframes @name { @frames();}
+    @-o-keyframes @name { @frames(); }
+    @keyframes @name { @frames(); }
+};
+/*keyframes*/
+.keyframes(blink,{
+	0%{opacity: 0;}
+	50%{opacity: 1;}
+	100%{opacity: 0;}
+});
+/*component*/
+.btn{
+	display: inline-block;
+	background-image: none;
+	border:none;
+	color: white;
+	padding: 8px 16px;
+	outline: none;
+	.bd-radius();
+	.toggleColor(@black);
+	
+	&-primary{.toggleColor(@primary);}
+	&-dark{.toggleColor(@black);}
+}
+
+.typed-cursor{
+	.animate(blink 1s infinite);
+}
