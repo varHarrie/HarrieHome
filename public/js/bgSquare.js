@@ -1,7 +1,7 @@
 ; (function ($) {
 	var radian = Math.PI / 180;
 	var defaults = {
-		color: "#333333",//#dae3e7
+		color: "#666666",//#dae3e7
 		minSize: 30,
 		maxSize: 80,
 		count: 20,
